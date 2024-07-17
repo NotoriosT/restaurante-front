@@ -1,0 +1,39 @@
+.lista-colaboradores-container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    position: fixed;
+    height: 100%;
+}
+
+.content-container {
+    margin-left: 250px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 250px); /* Espaço restante após a sidebar */
+}
+
+h1 {
+    color: #343a40;
+}
+
+.table-responsive {
+    width: 100%;
+    max-width: 800px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

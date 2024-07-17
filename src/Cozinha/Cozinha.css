@@ -1,0 +1,157 @@
+/* Cozinha.css */
+
+/* Remove margin and padding from row and columns */
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.col-md-3, .col-md-9, .col-lg-3, .col-lg-9 {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+/* Add padding to the main content area */
+.cala {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Style the container of the orders */
+.pedidos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+}
+
+/* Style each order card */
+.pedido-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1 1 calc(50% - 40px); /* Cada cartão ocupará 50% menos a margem */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-height: 400px; /* Limitar a altura do card */
+    overflow: hidden; /* Esconder o excesso */
+}
+
+.pedido-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.pedido-card h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #343a40;
+}
+
+.pedido-card p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #6c757d;
+}
+
+/* Scrollable section for product list */
+.produtos-lista {
+    max-height: 150px; /* Limitar a altura da lista de produtos */
+    overflow-y: auto; /* Adicionar rolagem vertical */
+    margin-bottom: 10px;
+}
+
+.produto-item {
+    margin-bottom: 5px;
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px; /* Espaço entre os botões */
+}
+
+.btn {
+    flex: 1;
+    margin-top: 10px;
+    font-size: 1em;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 992px) {
+    .pedido-card {
+        flex: 1 1 calc(50% - 40px); /* Manter duas colunas em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    .pedido-card {
+        flex: 1 1 calc(100% - 40px); /* Uma coluna em telas muito pequenas */
+    }
+}
+
+/* Sidebar specific styles */
+.cozinha-sidebar .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cozinha-sidebar .sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+}
+
+.cozinha-sidebar .sidebar a:hover {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.cozinha-sidebar .sidebar .btn {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cozinha-sidebar .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}

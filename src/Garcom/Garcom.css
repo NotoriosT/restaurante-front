@@ -1,0 +1,40 @@
+.mesas-container {
+    background-color: #f0f0f0; /* Cor de fundo para Mesas */
+    height: 100vh; /* Altura total da tela */
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o conteúdo no topo */
+    align-items: center; /* Centraliza horizontalmente */
+    padding: 10px;
+    margin: 50px;
+
+}
+
+.mesas-title {
+    text-align: center; /* Centraliza o título horizontalmente */
+    margin-top: 20px; /* Espaçamento superior */
+    margin-bottom: 10px; /* Espaçamento inferior entre o título e o Mesas */
+}
+.d-flex {
+    display: flex;
+}
+
+.sidebar-menu {
+    width: 250px; /* Ajuste a largura da sidebar conforme necessário */
+    background-color: #343a40;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+.content-garçom {
+    margin-left: 250px; /* Mesma largura da sidebar para que o conteúdo não fique escondido */
+    width: calc(100% - 250px); /* Ajuste a largura do conteúdo */
+    padding: 20px;
+    background-color: #f8f9fa;
+}

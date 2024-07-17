@@ -1,0 +1,136 @@
+/* Mesas.css */
+
+/* Container for the mesas */
+.mesas-container {
+    background-color: #f0f0f0; /* Cor de fundo para Mesas */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centraliza as mesas horizontalmente */
+    padding: 20px;
+    gap: 20px; /* Espaço entre as mesas */
+}
+
+.mesa {
+    width: 250px; /* Largura fixa para manter a forma quadrada */
+    height: 250px; /* Altura fixa para manter a forma quadrada */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 10px;
+}
+
+.mesa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-title {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #343a40;
+}
+
+/* Button styles */
+.btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1em;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Small button styles */
+.small-btn {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    border-radius: 4px;
+}
+
+/* Modal styles */
+.modal-content {
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+/* Form styles */
+.pedido-form {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.pedido-form select, .pedido-form input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px;
+}
+
+/* Sidebar specific styles */
+.sidebar-menu {
+    width: 250px; /* Ajuste a largura da sidebar conforme necessário */
+    background-color: #343a40;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+.content-garçom {
+    margin-left: 250px; /* Mesma largura da sidebar para que o conteúdo não fique escondido */
+    width: calc(100% - 250px); /* Ajuste a largura do conteúdo */
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.d-flex {
+    display: flex;
+}

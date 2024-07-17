@@ -1,0 +1,120 @@
+/* Gerente.css */
+
+/* Estilo geral para a página do gerente */
+.gerente-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f0f4f8; /* Cor de fundo fria */
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40; /* Cor da sidebar */
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 250px);
+    margin-left: 250px; /* Espaço para a sidebar */
+    padding: 20px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 350px; /* Largura máxima do formulário ajustada */
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para o formulário */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1.form-title {
+    color: #2c3e50; /* Título com cor fria */
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.4em; /* Reduzindo o tamanho da fonte */
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #2c3e50; /* Cor fria para os rótulos */
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.form-control,
+.form-control-file {
+    margin-bottom: 12px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 7px; /* Reduzido o padding para tornar o formulário mais compacto */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.form-control-file {
+    padding: 3px; /* Reduzido o padding para o campo de arquivo */
+}
+
+.form-control:focus {
+    border-color: #3498db; /* Cor fria para foco */
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.form-check-label {
+    margin-left: 5px;
+    color: #2c3e50;
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.btn-primary {
+    background-color: #3498db; /* Azul frio */
+    border: none;
+    padding: 8px 16px; /* Reduzindo o padding para tornar o botão mais compacto */
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Azul frio mais escuro */
+}
+
+.custom-button {
+    width: 140px; /* Reduzido para um tamanho mais compacto */
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .form-container {
+        margin-left: 0; /* Remove margem esquerda para telas pequenas */
+        width: 100%;
+        padding: 10px;
+    }
+
+    .content {
+        width: 90%; /* Reduz a largura do formulário para telas pequenas */
+    }
+}

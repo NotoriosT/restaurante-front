@@ -1,0 +1,81 @@
+.login-container {
+    height: 100vh;
+    display: flex;
+    background: linear-gradient(to right, #2c3e50, #607d8b);
+}
+
+.login-left, .login-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-left {
+    background-color: rgba(44, 62, 80, 0.8);
+    color: white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-right {
+    background-color: rgba(96, 125, 139, 0.8);
+    color: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-left h1 {
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #000000; /* Cor mais escura para o texto */
+}
+
+.login-right h2 {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login-left p {
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px; /* Aumenta o tamanho do botão */
+    font-size: 1.2em; /* Aumenta o tamanho do texto do botão */
+    border-radius: 10px; /* Bordas arredondadas */
+    background: #007bff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #0056b3;
+}
+
+.text-danger {
+    margin-top: 10px;
+}
+.btn-login{
+
+    height: 10vh;
+
+}
