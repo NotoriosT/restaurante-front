@@ -1,4 +1,7 @@
 /* Cozinha.css */
+.pedido-card.border-success {
+    border: 2px solid green;
+}
 
 /* Remove margin and padding from row and columns */
 .row.no-gutters {

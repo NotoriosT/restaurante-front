@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig'; // Importa a instância configurada do axios
 import Sidebar from './Sidebar'; // Importe o componente Sidebar
 import './Cozinha.css';
+import { Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const Cozinha = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -9,7 +11,7 @@ const Cozinha = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/pedidos'); // Altere para o endpoint correto do seu backend
+                const response = await axios.get('/api/pedidos');
                 setPedidos(response.data);
             } catch (error) {
                 console.error('Erro ao buscar pedidos:', error);
@@ -17,20 +19,48 @@ const Cozinha = () => {
         };
 
         fetchPedidos();
+
+        const socket = new SockJS('http://localhost:8080/ws');
+        const stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, () => {
+            stompClient.subscribe('/topic/pedidos', (message) => {
+                if (message.body) {
+                    const novoPedido = JSON.parse(message.body);
+                    setPedidos(prevPedidos => {
+                        const existingPedido = prevPedidos.find(p => p.id === novoPedido.id);
+                        if (existingPedido) {
+                            return prevPedidos.map(p => p.id === novoPedido.id ? novoPedido : p).filter(p => p.status === 'PEDENTE' || p.status === 'PREPARANDO');
+                        } else {
+                            return [...prevPedidos, novoPedido].filter(p => p.status === 'PEDENTE' || p.status === 'PREPARANDO');
+                        }
+                    });
+                }
+            });
+        });
+
+        return () => {
+            stompClient.disconnect();
+        };
     }, []);
 
+    const updateStatus = async (id, status) => {
+        try {
+            const response = await axios.put(`/api/pedidos/${id}/status`, null, { params: { status } });
+            setPedidos(prevPedidos => prevPedidos.map(pedido =>
+                pedido.id === id ? { ...pedido, status: response.data.status } : pedido
+            ).filter(p => p.status === 'PEDENTE' || p.status === 'PREPARANDO'));
+        } catch (error) {
+            console.error('Erro ao atualizar status do pedido:', error);
+        }
+    };
+
     const iniciarPreparo = (id) => {
-        const novosPedidos = pedidos.map(pedido =>
-            pedido.id === id ? { ...pedido, status: 'Em Preparo' } : pedido
-        );
-        setPedidos(novosPedidos);
+        updateStatus(id, 'PREPARANDO');
     };
 
     const finalizarPreparo = (id) => {
-        const novosPedidos = pedidos.map(pedido =>
-            pedido.id === id ? { ...pedido, status: 'Pronto' } : pedido
-        );
-        setPedidos(novosPedidos);
+        updateStatus(id, 'PRONTO');
     };
 
     return (
@@ -43,7 +73,7 @@ const Cozinha = () => {
                     <h1 className="mb-4">Pedidos</h1>
                     <div className="pedidos-container">
                         {pedidos.map(pedido => (
-                            <div key={pedido.id} className="pedido-card">
+                            <div key={pedido.id} className={`pedido-card ${pedido.status === 'PREPARANDO' ? 'border-success' : ''}`}>
                                 <h3>Mesa {pedido.mesaId}</h3>
                                 <p>Status: {pedido.status}</p>
                                 <div className="produtos-lista">
@@ -60,16 +90,16 @@ const Cozinha = () => {
                                 </div>
                                 <div className="btn-container">
                                     <button
-                                        className={`btn ${pedido.status === 'Aguardando' ? 'btn-warning' : 'btn-success'}`}
+                                        className={`btn ${pedido.status === 'PEDENTE' ? 'btn-warning' : 'btn-success'}`}
                                         onClick={() => iniciarPreparo(pedido.id)}
-                                        disabled={pedido.status !== 'Aguardando'}
+                                        disabled={pedido.status !== 'PEDENTE'}
                                     >
                                         Iniciar Preparo
                                     </button>
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => finalizarPreparo(pedido.id)}
-                                        disabled={pedido.status !== 'Em Preparo'}
+                                        disabled={pedido.status !== 'PREPARANDO'}
                                     >
                                         Finalizar Preparo
                                     </button>

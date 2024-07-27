@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import SidebarMenuGerente from './SidebarMenuGerente'; // Importe o componente SidebarMenuGerente
-import './css/Gerente.css'; // Importe o CSS do componente Gerente
-import axios from 'axios';
+import SidebarMenuGerente from './SidebarMenuGerente';
+import './css/Gerente.css';
+import axios from '../axiosConfig'; // Importa a instância configurada do axios
 import { Modal, Button } from 'react-bootstrap';
 
 const Gerente = () => {
@@ -9,7 +9,8 @@ const Gerente = () => {
     const [produto, setProduto] = useState({
         nome: '',
         preco: '',
-        disponivel: false
+        disponivel: false,
+        tipo: ''
     });
     const [imagem, setImagem] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -40,7 +41,7 @@ const Gerente = () => {
         formData.append('file', imagem);
 
         try {
-            const response = await axios.post('http://localhost:8080/api/produtos', formData, {
+            const response = await axios.post('/api/produtos', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -51,7 +52,8 @@ const Gerente = () => {
             setProduto({
                 nome: '',
                 preco: '',
-                disponivel: false
+                disponivel: false,
+                tipo: ''
             });
             setImagem(null);
             setTipo('');
@@ -92,7 +94,7 @@ const Gerente = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="productType">Tipo</label>
-                            <select id="productType" className="form-control" name="tipo" value={tipo} onChange={(e) => { handleChange(e); setTipo(e.target.value); }} required>
+                            <select id="productType" className="form-control" name="tipo" value={produto.tipo} onChange={(e) => { handleChange(e); setTipo(e.target.value); }} required>
                                 <option value="">Selecione...</option>
                                 <option value="CHURRASCO">Churrasco</option>
                                 <option value="BEBIDA">Bebida</option>
@@ -119,7 +121,7 @@ const Gerente = () => {
                     <p>Tem certeza de que deseja cadastrar o produto com as seguintes informações?</p>
                     <p><strong>Nome:</strong> {produto.nome}</p>
                     <p><strong>Preço:</strong> {produto.preco}</p>
-                    <p><strong>Tipo:</strong> {tipo}</p>
+                    <p><strong>Tipo:</strong> {produto.tipo}</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

@@ -1,32 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Mesa from './Mesa';
 import './Mesas.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from '../axiosConfig';
 
-const Mesas = () => {
-    const [mesas, setMesas] = useState([]);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        const fetchMesas = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get('/api/mesas', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                setMesas(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar mesas:', error);
-                setError('Erro ao buscar mesas');
-            }
-        };
-
-        fetchMesas();
-    }, []);
-
+const Mesas = ({ mesas }) => {
     return (
         <div className="container mt-5">
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
@@ -36,7 +13,6 @@ const Mesas = () => {
                     </div>
                 ))}
             </div>
-            {error && <p className="text-danger">{error}</p>}
         </div>
     );
 }

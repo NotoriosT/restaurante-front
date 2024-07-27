@@ -1,131 +1,154 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import SidebarMenuGerente from './SidebarMenuGerente'; // Importe o componente SidebarMenuGerente
+import './css/Gerente.css'; // Importe o CSS do componente Gerente
 import axios from '../axiosConfig'; // Importa a instância configurada do axios
-import SidebarMenuGerente from './SidebarMenuGerente';
-import { Modal, Button, Form } from 'react-bootstrap';
-import './css/ListaColaboradores.css';
+import { Modal, Button } from 'react-bootstrap';
 
-const ListaColaboradores = () => {
-    const [colaboradores, setColaboradores] = useState([]);
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedColaborador, setSelectedColaborador] = useState({
-        id: '',
-        login: '',
-        senha: ''
+const Gerente = () => {
+    const [tipo, setTipo] = useState('');
+    const [produto, setProduto] = useState({
+        nome: '',
+        preco: '',
+        disponivel: false,
+        tipo: '',
     });
+    const [imagem, setImagem] = useState(null);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
-    useEffect(() => {
-        const fetchColaboradores = async () => {
-            try {
-                const response = await axios.get('/api/colaboradores');
-                setColaboradores(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar colaboradores:', error);
-            }
-        };
-
-        fetchColaboradores();
-    }, []);
-
-    const handleEditClick = (colaborador) => {
-        setSelectedColaborador(colaborador);
-        setShowEditModal(true);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setProduto({ ...produto, [name]: value });
     };
 
-    const handleCloseEditModal = () => {
-        setShowEditModal(false);
+    const handleImageChange = (event) => {
+        setImagem(event.target.files[0]);
     };
 
-    const handleSaveEdit = async () => {
+    const handleCheckboxChange = (event) => {
+        setProduto({ ...produto, disponivel: event.target.checked });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setShowConfirmation(true);
+    };
+
+    const confirmSubmit = async () => {
+        setShowConfirmation(false);
+        const formData = new FormData();
+        formData.append('produto', new Blob([JSON.stringify(produto)], { type: 'application/json' }));
+        formData.append('file', imagem);
+
         try {
-            const response = await axios.put(`/api/colaboradores/${selectedColaborador.id}`, selectedColaborador);
-            console.log('Colaborador atualizado:', response.data);
-            setShowEditModal(false);
-            // Atualizar a lista de colaboradores
-            const updatedColaboradores = colaboradores.map((colaborador) =>
-                colaborador.id === selectedColaborador.id ? response.data : colaborador
-            );
-            setColaboradores(updatedColaboradores);
+            const response = await axios.post('/api/produtos', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('Produto cadastrado:', response.data);
+            setShowSuccess(true);
+            // Limpa o formulário
+            setProduto({
+                nome: '',
+                preco: '',
+                disponivel: false,
+                tipo: '',
+            });
+            setImagem(null);
+            setTipo('');
         } catch (error) {
-            console.error('Erro ao atualizar colaborador:', error);
+            console.error('Erro ao cadastrar produto:', error);
+            // Adicione a lógica de erro aqui, como exibir uma mensagem de erro
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setSelectedColaborador({ ...selectedColaborador, [name]: value });
+    const handleClose = () => {
+        setShowConfirmation(false);
+    };
+
+    const handleSuccessClose = () => {
+        setShowSuccess(false);
     };
 
     return (
-        <div className="d-flex">
-            <SidebarMenuGerente />
-            <div className="content-container">
-                <h1 className="mb-4 text-center">Lista de Colaboradores</h1>
-                <div className="table-responsive d-flex justify-content-center">
-                    <table className="table table-striped w-75">
-                        <thead>
-                        <tr>
-                            <th>Login</th>
-                            <th>Tipo</th>
-                            <th>Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {colaboradores.map(colaborador => (
-                            <tr key={colaborador.id}>
-                                <td>{colaborador.login}</td>
-                                <td>{colaborador.tipoFuncionario}</td>
-                                <td>
-                                    <Button variant="warning" onClick={() => handleEditClick(colaborador)}>
-                                        Editar
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+        <div className="gerente-container">
+            <div className="sidebar">
+                <SidebarMenuGerente />
+            </div>
+            <div className="form-container">
+                <div className="content">
+                    <h1 className="form-title mb-4">Cadastrar Produto</h1>
+                    <form onSubmit={handleSubmit} className="form-content">
+                        <div className="form-group">
+                            <label htmlFor="productName">Nome</label>
+                            <input type="text" className="form-control" id="productName" name="nome" value={produto.nome} onChange={handleChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="productPrice">Preço</label>
+                            <input type="text" className="form-control" id="productPrice" name="preco" value={produto.preco} onChange={handleChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="productImage">Imagem do Produto</label>
+                            <input type="file" className="form-control-file" id="productImage" accept="image/*" onChange={handleImageChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="productType">Tipo</label>
+                            <select id="productType" className="form-control" name="tipo" value={produto.tipo} onChange={(e) => { handleChange(e); setTipo(e.target.value); }} required>
+                                <option value="">Selecione...</option>
+                                <option value="CHURRASCO">Churrasco</option>
+                                <option value="BEBIDA">Bebida</option>
+                                <option value="COZINHA">Cozinha</option>
+                            </select>
+                        </div>
+                        <div className="form-check">
+                            <input type="checkbox" className="form-check-input" id="productAvailable" checked={produto.disponivel} onChange={handleCheckboxChange} />
+                            <label className="form-check-label" htmlFor="productAvailable">Disponível</label>
+                        </div>
+                        <div className="text-center mt-4">
+                            <button type="submit" className="btn btn-primary custom-button">Cadastrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            {/* Modal de Edição */}
-            <Modal show={showEditModal} onHide={handleCloseEditModal}>
+            {/* Modal de Confirmação */}
+            <Modal show={showConfirmation} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar Colaborador</Modal.Title>
+                    <Modal.Title>Confirmar Cadastro</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="formLogin">
-                            <Form.Label>Login</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="login"
-                                value={selectedColaborador.login}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formSenha">
-                            <Form.Label>Senha</Form.Label>
-                            <Form.Control
-                                type="password"
-                                name="senha"
-                                value={selectedColaborador.senha}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
-                    </Form>
+                    <p>Tem certeza de que deseja cadastrar o produto com as seguintes informações?</p>
+                    <p><strong>Nome:</strong> {produto.nome}</p>
+                    <p><strong>Preço:</strong> {produto.preco}</p>
+                    <p><strong>Tipo:</strong> {tipo}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseEditModal}>
+                    <Button variant="secondary" onClick={handleClose}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleSaveEdit}>
-                        Salvar
+                    <Button variant="primary" onClick={confirmSubmit}>
+                        Confirmar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal de Sucesso */}
+            <Modal show={showSuccess} onHide={handleSuccessClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sucesso</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Produto cadastrado com sucesso!</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleSuccessClose}>
+                        Fechar
                     </Button>
                 </Modal.Footer>
             </Modal>
         </div>
     );
-};
+}
 
-export default ListaColaboradores;
+export default Gerente;

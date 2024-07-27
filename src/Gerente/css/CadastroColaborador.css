@@ -1,32 +1,79 @@
 /* CadastroColaborador.css */
 
 .cadastro-colaborador-container {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100vh;
-    margin-right: 200px;
-
+    padding: 20px;
+    background-color: #f0f4f8; /* Cor de fundo fria */
 }
 
-.cadastro-colaborador-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #343a40;
-}
-
-.cadastro-colaborador-container .form-group {
-    margin-bottom: 15px;
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    max-width: 500px; /* Aumentando a largura máxima do formulário */
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para o formulário */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.cadastro-colaborador-container .btn-primary {
+.form-content h2 {
+    color: #2c3e50; /* Título com cor fria */
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.4em; /* Reduzindo o tamanho da fonte */
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #2c3e50; /* Cor fria para os rótulos */
+    font-size: 1.1em; /* Aumentando o tamanho da fonte */
+}
+
+.form-control {
+    margin-bottom: 12px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 7px; /* Reduzido o padding para tornar o formulário mais compacto */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.form-control:focus {
+    border-color: #3498db; /* Cor fria para foco */
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.btn-primary {
+    background-color: #3498db; /* Azul frio */
+    border: none;
+    padding: 8px 16px; /* Reduzindo o padding para tornar o botão mais compacto */
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.85em; /* Reduzindo o tamanho da fonte */
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Azul frio mais escuro */
+}
+
+.custom-button {
+    width: 140px; /* Reduzido para um tamanho mais compacto */
+    margin-top: 20px;
+}
+
+.text-center {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }

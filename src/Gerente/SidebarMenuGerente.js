@@ -5,7 +5,7 @@ import "./css/SidebarMenu.css";
 
 const SidebarMenuGerente = () => {
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="flex-column sidebar">
+        <Navbar bg="dark" variant="dark" className="flex-column sidebar">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="flex-column sidebar-nav">

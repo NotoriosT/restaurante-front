@@ -97,7 +97,7 @@ const Mesa = ({ mesa }) => {
             const pedidoParaEnviar = {
                 mesaId: mesa.numero,
                 produtos: produtosNoPedido,
-                status: 'pendente'
+                status: 'PEDENTE'
             };
 
             const response = await axios.post('/api/pedidos', pedidoParaEnviar);
@@ -106,7 +106,7 @@ const Mesa = ({ mesa }) => {
             setPedidosEnviados([...pedidosEnviados, pedidoParaEnviar]);
             setProdutosNoPedido([]);
             fecharFormPedido();
-            setStatus('ocupada');
+            setStatus('OCUPADA');
         } catch (error) {
             console.error('Erro ao enviar pedidos:', error);
         }
@@ -134,7 +134,7 @@ const Mesa = ({ mesa }) => {
     };
 
     const confirmarFecharConta = () => {
-        setStatus('disponível');
+        setStatus('DISPONÍVEL');
         setProdutosNoPedido([]);
         setPedidosEnviados([]);
         fecharResumoPedidos();
