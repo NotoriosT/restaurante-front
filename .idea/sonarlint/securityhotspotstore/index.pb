@@ -34,8 +34,6 @@ F
 :
 
 src/App.js,1\e\1e43fa63aecd2127be034b3fb9d4caa172275714
-F
-src/Gerente/Cozinha.js,2\e\2e0e4599c8ac6173cd088ad5c64d18fe2bccaa84
 G
 src/Gerente/css/Bar.css,3\e\3ebe73500a0fb5afcc8b94e4230edcbdb35fb278
 B

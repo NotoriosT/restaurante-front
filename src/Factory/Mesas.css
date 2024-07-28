@@ -78,8 +78,14 @@
 
 /* Modal styles */
 .modal-content {
+    width: 400px;
+
+margin-left: 150px;
+
     border-radius: 8px;
     padding: 20px;
+
+
 }
 
 .modal-dialog {
@@ -88,6 +94,7 @@
 }
 
 .modal-body {
+
     padding: 20px;
 }
 
