@@ -33,12 +33,12 @@ import Sidebar from '../NavBar/SidebarMenu'; // Import the Sidebar component
 
 const drawerWidth = 240;
 
-const ListaColaboradores = () => {
-    const [colaboradores, setColaboradores] = useState([]);
-    const [filteredColaboradores, setFilteredColaboradores] = useState([]);
+const ListaProdutos = () => {
+    const [produtos, setProdutos] = useState([]);
+    const [filteredProdutos, setFilteredProdutos] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showBlockModal, setShowBlockModal] = useState(false);
-    const [selectedColaborador, setSelectedColaborador] = useState(null);
+    const [selectedProduto, setSelectedProduto] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
@@ -49,55 +49,55 @@ const ListaColaboradores = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchColaboradores = async () => {
+        const fetchProdutos = async () => {
             try {
-                const response = await axios.get('/api/colaboradores');
-                setColaboradores(response.data);
-                setFilteredColaboradores(response.data);
+                const response = await axios.get('/api/produtos');
+                setProdutos(response.data);
+                setFilteredProdutos(response.data);
             } catch (error) {
-                console.error('Erro ao buscar colaboradores:', error);
+                console.error('Erro ao buscar produtos:', error);
             }
         };
 
-        fetchColaboradores();
+        fetchProdutos();
     }, []);
 
     useEffect(() => {
-        setFilteredColaboradores(
-            colaboradores.filter(colaborador =>
-                colaborador.login.toLowerCase().includes(searchTerm.toLowerCase())
+        setFilteredProdutos(
+            produtos.filter(produto =>
+                produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
             )
         );
         setCurrentPage(0);
-    }, [searchTerm, colaboradores]);
+    }, [searchTerm, produtos]);
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`/api/colaboradores/${selectedColaborador.id}`);
-            setColaboradores(colaboradores.filter(c => c.id !== selectedColaborador.id));
+            await axios.delete(`/api/produtos/${selectedProduto.id}`);
+            setProdutos(produtos.filter(p => p.id !== selectedProduto.id));
             setShowDeleteModal(false);
         } catch (error) {
-            console.error('Erro ao deletar colaborador:', error);
+            console.error('Erro ao deletar produto:', error);
         }
     };
 
     const handleBlock = async () => {
         try {
-            await axios.post(`/api/colaboradores/${selectedColaborador.id}/block`);
-            setColaboradores(colaboradores.map(c => c.id === selectedColaborador.id ? { ...c, blocked: true } : c));
+            await axios.post(`/api/produtos/${selectedProduto.id}/block`);
+            setProdutos(produtos.map(p => p.id === selectedProduto.id ? { ...p, blocked: true } : p));
             setShowBlockModal(false);
         } catch (error) {
-            console.error('Erro ao bloquear colaborador:', error);
+            console.error('Erro ao bloquear produto:', error);
         }
     };
 
-    const handleShowDeleteModal = (colaborador) => {
-        setSelectedColaborador(colaborador);
+    const handleShowDeleteModal = (produto) => {
+        setSelectedProduto(produto);
         setShowDeleteModal(true);
     };
 
-    const handleShowBlockModal = (colaborador) => {
-        setSelectedColaborador(colaborador);
+    const handleShowBlockModal = (produto) => {
+        setSelectedProduto(produto);
         setShowBlockModal(true);
     };
 
@@ -110,7 +110,7 @@ const ListaColaboradores = () => {
     };
 
     const handleNextPage = () => {
-        if ((currentPage + 1) * itemsPerPage < filteredColaboradores.length) {
+        if ((currentPage + 1) * itemsPerPage < filteredProdutos.length) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -122,7 +122,7 @@ const ListaColaboradores = () => {
     };
 
     const startIndex = currentPage * itemsPerPage;
-    const currentItems = filteredColaboradores.slice(startIndex, startIndex + itemsPerPage);
+    const currentItems = filteredProdutos.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <Box sx={{ display: 'flex', height: '100vh' }}>
@@ -153,24 +153,30 @@ const ListaColaboradores = () => {
                         />
                     </Box>
                     <TableContainer component={Paper} sx={{ width: '100%', overflowX: 'auto' }}>
-                        <Table aria-label="colaboradores table">
+                        <Table aria-label="produtos table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Login</TableCell>
-                                    <TableCell>Tipo de Funcionário</TableCell>
+                                    <TableCell>Nome</TableCell>
+                                    <TableCell>Preço</TableCell>
+                                    <TableCell>Tipo</TableCell>
+                                    <TableCell>Imagem</TableCell>
                                     <TableCell>Ações</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {currentItems.map((colaborador) => (
-                                    <TableRow key={colaborador.id}>
-                                        <TableCell>{colaborador.login}</TableCell>
-                                        <TableCell>{colaborador.tipoFuncionario}</TableCell>
+                                {currentItems.map((produto) => (
+                                    <TableRow key={produto.id}>
+                                        <TableCell>{produto.nome}</TableCell>
+                                        <TableCell>{produto.preco}</TableCell>
+                                        <TableCell>{produto.tipo}</TableCell>
+                                        <TableCell>
+                                            {produto.imagem && <img src={`data:image/jpeg;base64,${produto.imagem}`} alt={produto.nome} style={{ width: '50px', height: '50px' }} />}
+                                        </TableCell>
                                         <TableCell>
                                             <Button
                                                 variant="contained"
                                                 color="error"
-                                                onClick={() => handleShowDeleteModal(colaborador)}
+                                                onClick={() => handleShowDeleteModal(produto)}
                                                 sx={{ mr: 2, width: '100px' }}
                                             >
                                                 Deletar
@@ -178,7 +184,7 @@ const ListaColaboradores = () => {
                                             <Button
                                                 variant="contained"
                                                 color="warning"
-                                                onClick={() => handleShowBlockModal(colaborador)}
+                                                onClick={() => handleShowBlockModal(produto)}
                                                 sx={{ width: '100px' }}
                                             >
                                                 Bloquear
@@ -201,7 +207,7 @@ const ListaColaboradores = () => {
                         <Button
                             variant="contained"
                             onClick={handleNextPage}
-                            disabled={(currentPage + 1) * itemsPerPage >= filteredColaboradores.length}
+                            disabled={(currentPage + 1) * itemsPerPage >= filteredProdutos.length}
                         >
                             Próximo
                         </Button>
@@ -218,7 +224,7 @@ const ListaColaboradores = () => {
                                 Confirmar Deleção
                             </Typography>
                             <Typography id="delete-modal-description" sx={{ mt: 2 }}>
-                                Tem certeza que deseja deletar este colaborador?
+                                Tem certeza que deseja deletar este produto?
                             </Typography>
                             <Box sx={{ mt: 2, textAlign: 'right' }}>
                                 <Button variant="contained" onClick={() => setShowDeleteModal(false)} sx={{ mr: 2 }}>
@@ -242,7 +248,7 @@ const ListaColaboradores = () => {
                                 Confirmar Bloqueio
                             </Typography>
                             <Typography id="block-modal-description" sx={{ mt: 2 }}>
-                                Tem certeza que deseja bloquear este colaborador?
+                                Tem certeza que deseja bloquear este produto?
                             </Typography>
                             <Box sx={{ mt: 2, textAlign: 'right' }}>
                                 <Button variant="contained" onClick={() => setShowBlockModal(false)} sx={{ mr: 2 }}>
@@ -272,4 +278,4 @@ const modalStyle = {
     p: 4,
 };
 
-export default ListaColaboradores;
+export default ListaProdutos;

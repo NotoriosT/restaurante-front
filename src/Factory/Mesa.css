@@ -1,13 +1,14 @@
 /* Mesas.css */
 
 .mesas-container {
-    background-color: #f0f0f0;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
     margin-top: 50px;
+    height: auto;
 }
 
 .mesa {
@@ -102,24 +103,12 @@
 }
 
 .pedido-form select, .pedido-form input {
-    margin-top: 5px;
-    margin-bottom: 5px;
+
+
     width: 100%;
-    padding: 5px;
 }
 
 /* Sidebar specific styles */
-.sidebar-menu {
-    width: 250px;
-    background-color: #343a40;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    padding-top: 20px;
-    z-index: 1000;
-}
 
 .content-garçom {
     margin-left: 250px;

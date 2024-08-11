@@ -1,6 +1,6 @@
 
-fjavascript:S1481s">Remove the declaration of the unused 'calcularTotal' variable.(ÉûÇğÿÿÿÿÿ8ºÜê‰2
-cjavascript:S1854s";Remove this useless assignment to variable "calcularTotal".(ÉûÇğÿÿÿÿÿ8ÓÜê‰2
-Bjavascript:S6479·"Do not use Array index in keys(¸¦¾œ8ÓÜê‰2
-Bjavascript:S6479Î"Do not use Array index in keys(¸¦¾œ8ÔÜê‰2
-Gjavascript:S6479Ğ"Do not use Array index in keys(ÃñªÏøÿÿÿÿ8ÔÜê‰2
+fjavascript:S1481s">Remove the declaration of the unused 'calcularTotal' variable.(ÉûÇğÿÿÿÿÿ8éê‹Û2
+cjavascript:S1854s";Remove this useless assignment to variable "calcularTotal".(ÉûÇğÿÿÿÿÿ8êê‹Û2
+Bjavascript:S6479·"Do not use Array index in keys(¸¦¾œ8êê‹Û2
+Bjavascript:S6479Î"Do not use Array index in keys(¸¦¾œ8ëê‹Û2
+Gjavascript:S6479Ğ"Do not use Array index in keys(ÃñªÏøÿÿÿÿ8ëê‹Û2

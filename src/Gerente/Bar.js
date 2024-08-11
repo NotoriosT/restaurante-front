@@ -1,5 +1,5 @@
 import React from 'react';
-import SidebarMenuGerente from './SidebarMenuGerente'; // Importe o componente SidebarMenuGerente
+import SidebarMenuGerente from '../NavBar/SidebarMenu'; // Importe o componente SidebarMenuGerente
 import './css/Cozinha.css'; // Reutilize o CSS do componente Cozinha
 
 const Bar = () => {

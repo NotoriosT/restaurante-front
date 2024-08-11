@@ -1,53 +1,41 @@
-.sidebar {
-    background-color: #343a40;
-    color: #ffffff;
+/* SidebarMenu.css */
+#sidebar-item-cozinha,
+#sidebar-item-bar,
+#sidebar-item-churrasco,
+#sidebar-item-produtos,
+#sidebar-item-cadastrar-colaborador,
+#sidebar-item-lista-de-colaboradores,
+#sidebar-item-sair,
+#sidebar-item-signout {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: #000000; /* Cor do texto padrão */
+}
+
+#sidebar-item-cozinha:hover,
+#sidebar-item-bar:hover,
+#sidebar-item-churrasco:hover,
+#sidebar-item-produtos:hover,
+#sidebar-item-cadastrar-colaborador:hover,
+#sidebar-item-lista-de-colaboradores:hover,
+#sidebar-item-sair:hover,
+#sidebar-item-signout:hover {
+    background-color: #1976d2; /* Cor de fundo ao passar o mouse */
+    color: #ffffff !important; /* Cor do texto ao passar o mouse */
+}
+
+.MuiListItemIcon-root {
+    color: inherit; /* Mantém a cor do ícone igual à cor do texto */
+}
+
+#appbar {
+    background-color: #1976d2; /* Cor de fundo do AppBar */
+    color: #ffffff; /* Cor do texto do AppBar */
+}
+
+.MuiTypography-root {
+    font-weight: bold; /* Texto em negrito */
+}
+.cor{
     height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-}
-
-.sidebar a:hover {
-    background-color: #007bff;
-    color: #ffffff;
-}
-
-.sidebar-bottom {
-    margin-top: auto;
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    .sidebar ul {
-        display: flex;
-        flex-direction: row;
-    }
-    .sidebar a {
-        padding: 10px;
-        flex: 1;
-        text-align: center;
-    }
-    .sidebar-bottom {
-        margin-top: 10px;
-    }
+    background-color: #5b91c9;
 }

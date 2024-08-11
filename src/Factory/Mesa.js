@@ -192,7 +192,7 @@ const Mesa = ({ mesa }) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" className="small-btn" onClick={fecharFormPedido}>Cancelar</Button>
-                        <Button variant="primary" className="small-btn" onClick={enviarPedidos}>Enviar Pedido</Button>
+                        <Button variant="primary" className="small-btn" onClick={enviarPedidos}>Enviar</Button>
                     </Modal.Footer>
                 </Modal>
 

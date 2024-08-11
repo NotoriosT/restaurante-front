@@ -50,8 +50,6 @@ F
 src/Cozinha/Cozinha.js,3\9\39d34eba01a8df8926c0cd42544c362c156be9a0
 G
 src/Cozinha/Cozinha.css,9\e\9e885c976f0b1bc0fb9099f7da656999e0892db1
-O
-src/Gerente/css/SidebarMenu.css,c\3\c36d4f9a599dc2f75dddadcb7148111e7374e7e9
 [
 +src/Gerente/Cadastro/CadastroColaborador.js,8\2\82251d7c779a35f5bb2777c98f31bd87be1b0d26
 W
@@ -61,8 +59,14 @@ K
 V
 &src/Gerente/css/ListaColaboradores.css,8\c\8ce21ad941708ed9e739912d889064b713b7dff8
 Q
-!src/Gerente/SidebarMenuGerente.js,e\3\e368c469aca7816624a11868c8748fb94f7cbd4d
-Q
 !src/Gerente/ListaColaboradores.js,a\b\abf81c75cdf902d7b84787a99ba6c8b356bef193
 B
 src/axiosConfig.js,2\1\21273784ed5ae994d0f16a37ef6dce98d6bb17f9
+>
+src/Bar/Bar.js,f\4\f40d49cc57abaeffcaefb0bc800a4a9ef5393582
+?
+src/Bar/Bar.css,3\a\3a15402f2bd5781fa7eed68056a629fecfb6d624
+G
+src/NavBar/menuItems.js,3\d\3d329cd13bd8aa44ec61e1ec2fb8e347b78be9c1
+L
+src/Gerente/ListaProdutos.js,e\4\e4c3ce72834a55cb2a601132af2f32c7414ba273

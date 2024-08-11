@@ -1,11 +1,14 @@
+// Gerente.js
 import React, { useState } from 'react';
-import SidebarMenuGerente from './SidebarMenuGerente';
+import { CssBaseline, AppBar, Toolbar, Typography, IconButton, useTheme, useMediaQuery } from '@mui/material';
+import { Menu } from '@mui/icons-material';
+import Sidebar from '../NavBar/SidebarMenu'; // Atualize o import para a nova Sidebar
 import './css/Gerente.css';
 import axios from '../axiosConfig'; // Importa a instância configurada do axios
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
+
 
 const Gerente = () => {
-    const [tipo, setTipo] = useState('');
     const [produto, setProduto] = useState({
         nome: '',
         preco: '',
@@ -15,6 +18,10 @@ const Gerente = () => {
     const [imagem, setImagem] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -56,97 +63,115 @@ const Gerente = () => {
                 tipo: ''
             });
             setImagem(null);
-            setTipo('');
         } catch (error) {
             console.error('Erro ao cadastrar produto:', error);
             // Adicione a lógica de erro aqui, como exibir uma mensagem de erro
         }
     };
 
-    const handleClose = () => {
-        setShowConfirmation(false);
-    };
-
-    const handleSuccessClose = () => {
-        setShowSuccess(false);
+    const handleDrawerToggle = () => {
+        setSidebarOpen(!sidebarOpen);
     };
 
     return (
-        <div className="gerente-container">
-            <div className="sidebar">
-                <SidebarMenuGerente />
-            </div>
-            <div className="form-container">
-                <div className="content">
-                    <h1 className="form-title mb-4">Cadastrar Produto</h1>
-                    <form onSubmit={handleSubmit} className="form-content">
-                        <div className="form-group">
-                            <label htmlFor="productName">Nome</label>
-                            <input type="text" className="form-control" id="productName" name="nome" value={produto.nome} onChange={handleChange} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="productPrice">Preço</label>
-                            <input type="text" className="form-control" id="productPrice" name="preco" value={produto.preco} onChange={handleChange} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="productImage">Imagem do Produto</label>
-                            <input type="file" className="form-control-file" id="productImage" accept="image/*" onChange={handleImageChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="productType">Tipo</label>
-                            <select id="productType" className="form-control" name="tipo" value={produto.tipo} onChange={(e) => { handleChange(e); setTipo(e.target.value); }} required>
-                                <option value="">Selecione...</option>
-                                <option value="CHURRASCO">Churrasco</option>
-                                <option value="BEBIDA">Bebida</option>
-                                <option value="COZINHA">Cozinha</option>
-                            </select>
-                        </div>
-                        <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="productAvailable" checked={produto.disponivel} onChange={handleCheckboxChange} />
-                            <label className="form-check-label" htmlFor="productAvailable">Disponível</label>
-                        </div>
-                        <div className="text-center mt-4">
-                            <button type="submit" className="btn btn-primary custom-button">Cadastrar</button>
-                        </div>
-                    </form>
+        <div style={{ display: 'flex', height: '100vh' }}>
+            <CssBaseline />
+            {isMobile && (
+                <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={handleDrawerToggle}
+                            sx={{ mr: 2 }}
+                        >
+                            <Menu />
+                        </IconButton>
+                        <Typography variant="h6" noWrap component="div">
+                            Gerente
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+            )}
+
+            <Sidebar
+                open={sidebarOpen}
+                onClose={handleDrawerToggle}
+                userType="gerente" // Definindo o tipo de usuário como "garcom"
+            />
+            <main style={{ flexGrow: 1, padding: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: isMobile ? theme.mixins.toolbar.minHeight : 0 }}>
+                <div className="container form-container d-flex flex-column align-items-center justify-content-center" style={{ width: '100%', height: '100%' }}>
+                    <div className="col-12 col-md-8 col-lg-6">
+                        <h1 className="form-title mb-4 text-center">Cadastrar Produto</h1>
+                        <form onSubmit={handleSubmit} className="form-content">
+                            <Form.Group>
+                                <Form.Label>Nome</Form.Label>
+                                <Form.Control type="text" name="nome" value={produto.nome} onChange={handleChange} required />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Preço</Form.Label>
+                                <Form.Control type="text" name="preco" value={produto.preco} onChange={handleChange} required />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Imagem do Produto</Form.Label>
+                                <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Tipo</Form.Label>
+                                <Form.Control as="select" name="tipo" value={produto.tipo} onChange={handleChange} required>
+                                    <option value="">Selecione...</option>
+                                    <option value="CHURRASCO">Churrasco</option>
+                                    <option value="BEBIDA">Bebida</option>
+                                    <option value="COZINHA">Cozinha</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Check type="checkbox" id="productAvailable" label="Disponível" checked={produto.disponivel} onChange={handleCheckboxChange} />
+                            </Form.Group>
+                            <div className="text-center mt-4">
+                                <Button type="submit" variant="primary" className="custom-button">Cadastrar</Button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            {/* Modal de Confirmação */}
-            <Modal show={showConfirmation} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirmar Cadastro</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Tem certeza de que deseja cadastrar o produto com as seguintes informações?</p>
-                    <p><strong>Nome:</strong> {produto.nome}</p>
-                    <p><strong>Preço:</strong> {produto.preco}</p>
-                    <p><strong>Tipo:</strong> {produto.tipo}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancelar
-                    </Button>
-                    <Button variant="primary" onClick={confirmSubmit}>
-                        Confirmar
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                {/* Modal de Confirmação */}
+                <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirmar Cadastro</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Tem certeza de que deseja cadastrar o produto com as seguintes informações?</p>
+                        <p><strong>Nome:</strong> {produto.nome}</p>
+                        <p><strong>Preço:</strong> {produto.preco}</p>
+                        <p><strong>Tipo:</strong> {produto.tipo}</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
+                            Cancelar
+                        </Button>
+                        <Button variant="primary" onClick={confirmSubmit}>
+                            Confirmar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
-            {/* Modal de Sucesso */}
-            <Modal show={showSuccess} onHide={handleSuccessClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Sucesso</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Produto cadastrado com sucesso!</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleSuccessClose}>
-                        Fechar
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                {/* Modal de Sucesso */}
+                <Modal show={showSuccess} onHide={() => setShowSuccess(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Sucesso</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Produto cadastrado com sucesso!</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => setShowSuccess(false)}>
+                            Fechar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </main>
         </div>
     );
 }
