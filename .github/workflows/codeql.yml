@@ -31,21 +31,14 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+      with:
+        output: ${{ github.workspace }}/results/javascript.sarif
 
     - name: List all files in workspace
       run: find ${{ github.workspace }} -type f
 
     - name: List all files in temporary directories
       run: find /home/runner/work/ -type f
-
-    - name: Create Results Directory
-      run: mkdir -p ${{ github.workspace }}/results/
-
-    - name: Move SARIF File to Results Directory
-      run: mv ${{ github.workspace }}/javascript.sarif ${{ github.workspace }}/results/
-
-    - name: List files in Results Directory
-      run: ls -al ${{ github.workspace }}/results/
 
     - name: Upload CodeQL SARIF results
       uses: actions/upload-artifact@v2
