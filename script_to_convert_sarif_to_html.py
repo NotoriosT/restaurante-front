@@ -2,7 +2,7 @@ import json
 from sarif_om import SarifLog
 
 # Leitura do arquivo SARIF
-with open("results/javascript.sarif", "r") as sarif_file:
+with open("results/javascript.sarif/javascript.sarif", "r") as sarif_file:
     sarif_data = json.load(sarif_file)
 
 # Parse do SARIF usando sarif-om
