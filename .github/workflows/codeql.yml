@@ -1,4 +1,4 @@
-name: "CodeQL Analysis2"
+name: "CodeQL Analysis"
 
 on:
   push:
@@ -31,6 +31,12 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+
+    - name: List all files in workspace
+      run: find ${{ github.workspace }} -type f
+
+    - name: List all files in temporary directories
+      run: find /home/runner/work/ -type f
 
     - name: Create Results Directory
       run: mkdir -p ${{ github.workspace }}/results/
