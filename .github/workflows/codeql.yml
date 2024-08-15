@@ -1,4 +1,4 @@
-name: "CodeQL Analysis2"
+name: "CodeQL Analysis"
 
 on:
   push:
@@ -37,9 +37,8 @@ jobs:
     - name: Create Results Directory
       run: mkdir -p ${{ github.workspace }}/results/
 
-    - name: Move SARIF File to Results Directory (Skip if already in place)
-      if: always() && !startsWith(steps.perform_codeql.outputs.output, ${{ github.workspace }}/results/)
-      run: mv ${{ github.workspace }}/javascript.sarif ${{ github.workspace }}/results/
+    - name: Move SARIF File to Correct Location
+      run: mv /home/runner/work/restaurante-front/restaurante-front/results/javascript.sarif/javascript.sarif ${{ github.workspace }}/results/
 
     - name: List files in Results Directory
       run: ls -al ${{ github.workspace }}/results/
