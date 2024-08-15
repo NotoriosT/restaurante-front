@@ -1,9 +1,5 @@
 name: "CodeQL Analysis"
 
-permissions:
-  contents: write
-  security-events: write
-
 on:
   push:
     branches: [ "main" ]
@@ -17,10 +13,9 @@ jobs:
     name: Analyze
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'javascript' ]
+    permissions:
+      contents: write
+      security-events: write
 
     steps:
     - name: Checkout repository
@@ -29,19 +24,19 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: ${{ matrix.language }}
+        languages: javascript
 
     - name: Autobuild
-      run: |
-        if [[ "${{ matrix.language }}" == "javascript" ]]; then
-          npm install
-        fi
+      run: npm install
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
+
+    - name: List files in results directory
+      run: ls -al /home/runner/work/restaurante-front/restaurante-front/results/
 
     - name: Upload CodeQL SARIF results
       uses: actions/upload-artifact@v2
       with:
         name: codeql-sarif
-        path: ${{ github.workspace }}/results/javascript.sarif
+        path: /home/runner/work/restaurante-front/restaurante-front/results/javascript.sarif
