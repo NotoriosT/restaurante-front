@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -5,8 +6,9 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 def send_email(report_path, recipient_email):
-    sender_email = "seu_email@example.com"
-    sender_password = "sua_senha"
+    # Recuperando as credenciais a partir das variáveis de ambiente
+    sender_email = os.getenv("EMAIL_SENDER")
+    sender_password = os.getenv("EMAIL_PASSWORD")
 
     # Configuração do servidor SMTP
     server = smtplib.SMTP('smtp.example.com', 587)
