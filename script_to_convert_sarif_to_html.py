@@ -1,12 +1,8 @@
 import json
-from sarif_om import SarifLog
 
 # Leitura do arquivo SARIF
 with open("results/javascript.sarif/javascript.sarif", "r") as sarif_file:
     sarif_data = json.load(sarif_file)
-
-# Parse do SARIF usando sarif-om
-sarif_log = SarifLog.from_dict(sarif_data)
 
 # Geração do HTML
 html_content = """
@@ -19,9 +15,11 @@ html_content = """
     <ul>
 """
 
-for run in sarif_log.runs:
-    for result in run.results:
-        html_content += f"<li><strong>{result.rule_id}</strong>: {result.message.text}</li>"
+for run in sarif_data.get("runs", []):
+    for result in run.get("results", []):
+        rule_id = result.get("ruleId", "N/A")
+        message = result.get("message", {}).get("text", "N/A")
+        html_content += f"<li><strong>{rule_id}</strong>: {message}</li>"
 
 html_content += """
     </ul>
