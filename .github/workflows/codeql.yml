@@ -1,10 +1,13 @@
 name: "CodeQL Analysis"
 
+permissions:
+  contents: write
+  security-events: write
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '0 2 * * 1'
@@ -41,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: codeql-sarif
-        path: ${{ github.workspace }}/codeql-results/javascript.sarif
+        path: ${{ github.workspace }}/results/javascript.sarif
