@@ -1,4 +1,4 @@
-name: "CodeQL Analysis"
+name: "CodeQL Analysis2"
 
 on:
   push:
@@ -32,11 +32,17 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
 
-    - name: List files in results directory
-      run: ls -al /home/runner/work/restaurante-front/restaurante-front/results/
+    - name: Create Results Directory
+      run: mkdir -p ${{ github.workspace }}/results/
+
+    - name: Move SARIF File to Results Directory
+      run: mv ${{ github.workspace }}/javascript.sarif ${{ github.workspace }}/results/
+
+    - name: List files in Results Directory
+      run: ls -al ${{ github.workspace }}/results/
 
     - name: Upload CodeQL SARIF results
       uses: actions/upload-artifact@v2
       with:
         name: codeql-sarif
-        path: /home/runner/work/restaurante-front/restaurante-front/results/javascript.sarif
+        path: ${{ github.workspace }}/results/javascript.sarif
